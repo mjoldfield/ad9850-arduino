@@ -1,6 +1,6 @@
 #include <AD9850.h>
 
-AD9850 ad(5, 6, 7); // fq_ud, w_clk, d7
+AD9850 ad(5, 6, 7); // w_clk, fq_ud, d7
 
 void setup() {}
 

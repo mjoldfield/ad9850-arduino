@@ -17,14 +17,14 @@
 class AD9850
 {
     private:
-        const char FQ_UD; // frequency update pin
         const char W_CLK; // word load clock pin
+        const char FQ_UD; // frequency update pin
         const char D7; // serial input pin
         double frequency;
         uint8_t phase;
         void update();
     public:
-        AD9850(char fq_ud, char w_clk, char d7);
+        AD9850(char w_clk, char fq_ud, char d7);
         /* NOTE: For device start-up in serial mode,
         hardwire pin 2 at 0, pin 3 at 1, and pin 4 at 1 */
         void setfreq(double f);
