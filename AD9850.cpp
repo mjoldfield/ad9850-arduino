@@ -1,12 +1,12 @@
 #include <AD9850.h>
 #define pulse(pin) { digitalWrite(pin, HIGH); digitalWrite(pin, LOW); }
 
-AD9850::AD9850(char fq_ud, char w_clk, char d7)
-    : FQ_UD(fq_ud), W_CLK(w_clk), D7(d7) {
+AD9850::AD9850(char w_clk, char fq_ud, char d7)
+    : W_CLK(w_clk), FQ_UD(fq_ud), D7(d7) {
     frequency = 0;
     phase = 0;
-    pinMode(FQ_UD, OUTPUT);
     pinMode(W_CLK, OUTPUT);
+    pinMode(FQ_UD, OUTPUT);
     pinMode(D7, OUTPUT);
     pulse(W_CLK);
     pulse(FQ_UD);
