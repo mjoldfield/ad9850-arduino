@@ -20,8 +20,8 @@ class AD9850
         const char W_CLK; // word load clock pin
         const char FQ_UD; // frequency update pin
         const char D7; // serial input pin
-        double frequency;
-        uint8_t phase;
+        uint32_t frequency; // delta phase
+        uint8_t phase; // phase offset
         void update();
     public:
         AD9850(char w_clk, char fq_ud, char d7);
