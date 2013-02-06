@@ -13,9 +13,9 @@ AD9850::AD9850(char w_clk, char fq_ud, char d7)
 }
 
 void AD9850::update() {
-    uint32_t d = frequency;
-    for (int i = 0; i < 32; i++, d >>= 1) {
-        digitalWrite(D7, d & (uint32_t)0x00000001);
+    uint32_t f = frequency;
+    for (int i = 0; i < 32; i++, f >>= 1) {
+        digitalWrite(D7, f & (uint32_t)0x00000001);
         pulse(W_CLK);
     }
     uint8_t p = phase;
