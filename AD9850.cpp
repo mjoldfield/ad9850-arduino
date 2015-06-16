@@ -5,7 +5,7 @@
 AD9850::AD9850(char w_clk, char fq_ud, char d7, char reset)
   : W_CLK(w_clk), FQ_UD(fq_ud), D7(d7), RESET(reset)
 {
-  frequency = 0;
+  phase_delta = 0;
   phase = 0;
 
   pinMode(W_CLK, OUTPUT);
@@ -20,11 +20,10 @@ AD9850::AD9850(char w_clk, char fq_ud, char d7, char reset)
 
 void AD9850::update()
 {
-  uint32_t f = frequency;
-
-  for (int i = 0; i < 32; i++, f >>= 1)
+  uint32_t dphi = phase_delta;
+  for (int i = 0; i < 32; i++, dphi >>= 1)
     {
-      digitalWrite(D7, f & (uint32_t)0x00000001);
+      digitalWrite(D7, dphi & (uint32_t)0x00000001);
       pulse(W_CLK);
     }
   
@@ -38,15 +37,28 @@ void AD9850::update()
   pulse(FQ_UD);
 }
 
-void AD9850::setfreq(double f)
+uint32_t AD9850::calc_phase_delta(double f)
 {
-    frequency = f * 4294967296.0 / EX_CLK;
-    update();
+  uint32_t dphi = f * 4294967296.0 / EX_CLK;
+  return dphi;
 }
-void AD9850::setphase(uint8_t p)
+
+void AD9850::set_phase_delta(uint32_t dphi)
 {
-    phase = p << 3;
-    update();
+  phase_delta = dphi;
+  update();
+}
+
+void AD9850::set_freq(double f)
+{
+  phase_delta = calc_phase_delta(f);
+  update();
+}
+
+void AD9850::set_phase(uint8_t p)
+{
+  phase = p << 3;
+  update();
 }
 
 void AD9850::down()

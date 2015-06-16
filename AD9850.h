@@ -23,7 +23,7 @@ class AD9850
   const char FQ_UD; // frequency update pin
   const char D7;    // serial input pin
   const char RESET; // reset line
-  uint32_t frequency; // delta phase
+  uint32_t phase_delta;
   uint8_t phase; // phase offset
   void update();
 
@@ -31,9 +31,11 @@ class AD9850
   AD9850(char w_clk, char fq_ud, char d7, char reset);
   /* NOTE: For device start-up in serial mode,
      hardwire pin 2 at 0, pin 3 at 1, and pin 4 at 1 */
-  void setfreq(double f);
+  uint32_t calc_phase_delta(double f);
+  void set_phase_delta(uint32_t dphi);
+  void set_freq(double f);
   // set frequency in Hz
-  void setphase(uint8_t p);
+  void set_phase(uint8_t p);
   // for flexibility, p is an int value and 0 <= p <= 32,
   // as input, 360 degree devide into 32 parts,
   // you will get phase increments for 360/32*p degree
