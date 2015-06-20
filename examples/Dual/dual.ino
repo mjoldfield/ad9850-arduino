@@ -45,6 +45,8 @@ static uint8_t  phase = 0;
 static double   base_f;
 static uint32_t base_dphi;
 
+static uint32_t step_time_ms = 100;
+
 static void print_state(void)
 {
   Serial.println("Current state:");
@@ -131,11 +133,20 @@ static void print_usage(void)
   Serial.println("  select second oscillator:    :");
   Serial.println("     so e.g. 2:3 does what you expect");
   Serial.println("  tweak frequency of osc 1:    k,l");
+  Serial.println("  as above just for a trice:   i,o");
   Serial.println("  zero frequency tweaks:       z");
   Serial.println(""); 
   
   print_state();
 }
+
+static void step_osc_1(int8_t dd)
+{
+  set_osc_1(mul_1, d_1 + dd);
+  delay(step_time_ms);
+  set_osc_1(mul_1, d_1 - dd);
+}
+
 
 //
 // Main code starts here
@@ -204,6 +215,15 @@ void loop()
       
     case('l'):
       set_osc_1(mul_1, d_1 + 1);
+      break;
+      
+    // Tweak the frequency but only for a brief time
+    case('i'):
+      step_osc_1(-1);
+      break;
+      
+    case('o'):
+      step_osc_1(1);
       break;
       
     case('z'):
