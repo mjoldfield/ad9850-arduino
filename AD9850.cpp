@@ -53,7 +53,7 @@ void AD9850::update()
 
 uint32_t AD9850::calc_phase_delta(double f)
 {
-  uint32_t dphi = f * 4294967296.0 / EX_CLK;
+  uint32_t dphi = f * 4294967296.0 / EX_CLK + 0.5;
   return dphi;
 }
 
