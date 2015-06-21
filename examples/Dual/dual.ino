@@ -45,7 +45,9 @@ static uint8_t  phase = 0;
 static double   base_f;
 static uint32_t base_dphi;
 
-static uint32_t step_time_ms = 100;
+// 0.138 *  249 = 34.362s which is the best sensible approximation to
+// 125e6 / 2^32 = 34.360s we need for a perfect loop
+static uint32_t step_time_ms = 138;
 
 static void print_state(void)
 {
